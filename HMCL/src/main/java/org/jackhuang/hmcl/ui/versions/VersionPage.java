@@ -245,14 +245,6 @@ public class VersionPage extends DecoratorAnimatedPage implements DecoratorPage 
                 modListItem.activeProperty().bind(control.tab.getSelectionModel().selectedItemProperty().isEqualTo(control.modListTab));
                 modListItem.setOnAction(e -> control.tab.select(control.modListTab));
 
-                AdvancedListItem installerListItem = new AdvancedListItem();
-                installerListItem.getStyleClass().add("navigation-drawer-item");
-                installerListItem.setTitle(i18n("settings.tabs.installers"));
-                installerListItem.setLeftGraphic(wrap(SVG::cube));
-                installerListItem.setActionButtonVisible(false);
-                installerListItem.activeProperty().bind(control.tab.getSelectionModel().selectedItemProperty().isEqualTo(control.installerListTab));
-                installerListItem.setOnAction(e -> control.tab.select(control.installerListTab));
-
                 AdvancedListItem worldListItem = new AdvancedListItem();
                 worldListItem.getStyleClass().add("navigation-drawer-item");
                 worldListItem.setTitle(i18n("world.manage"));
@@ -264,7 +256,6 @@ public class VersionPage extends DecoratorAnimatedPage implements DecoratorPage 
                 AdvancedListBox sideBar = new AdvancedListBox()
                         .add(versionSettingsItem)
                         .add(modListItem)
-                        .add(installerListItem)
                         .add(worldListItem);
                 VBox.setVgrow(sideBar, Priority.ALWAYS);
 

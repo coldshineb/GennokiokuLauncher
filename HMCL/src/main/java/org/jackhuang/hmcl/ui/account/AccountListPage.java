@@ -99,18 +99,10 @@ public class AccountListPage extends DecoratorAnimatedPage implements DecoratorP
                     boxMethods.getChildren().add(new ClassTitle(i18n("account.create")));
                     FXUtils.setLimitWidth(boxMethods, 200);
 
-                    AdvancedListItem offlineItem = new AdvancedListItem();
-                    offlineItem.getStyleClass().add("navigation-drawer-item");
-                    offlineItem.setActionButtonVisible(false);
-                    offlineItem.setTitle(i18n("account.methods.offline"));
-                    offlineItem.setLeftGraphic(wrap(SVG::account));
-                    offlineItem.setOnAction(e -> Controllers.dialog(new CreateAccountPane(Accounts.FACTORY_OFFLINE)));
-                    boxMethods.getChildren().add(offlineItem);
-
                     AdvancedListItem littleSkinItem = new AdvancedListItem();
                     littleSkinItem.getStyleClass().add("navigation-drawer-item");
                     littleSkinItem.setActionButtonVisible(false);
-                    littleSkinItem.setTitle(i18n("account.methods.moonlightland"));
+                    littleSkinItem.setTitle(i18n("account.methods.gennokioku"));
                     littleSkinItem.setLeftGraphic(wrap(SVG::server));
                     littleSkinItem.setOnAction(e -> Controllers.dialog(new CreateAccountPane(Accounts.FACTORY_LITTLE_SKIN)));
                     boxMethods.getChildren().add(littleSkinItem);

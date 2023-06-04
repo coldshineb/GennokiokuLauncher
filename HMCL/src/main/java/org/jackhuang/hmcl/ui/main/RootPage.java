@@ -137,20 +137,6 @@ public class RootPage extends DecoratorAnimatedPage implements DecoratorPage {
                 }
             });
 
-            // third item in left sidebar
-            AdvancedListItem gameItem = new AdvancedListItem();
-            gameItem.setLeftGraphic(wrap(SVG::viewList));
-            gameItem.setActionButtonVisible(false);
-            gameItem.setTitle(i18n("version.manage"));
-            gameItem.setOnAction(e -> Controllers.navigate(Controllers.getGameListPage()));
-
-            // forth item in left sidebar
-            AdvancedListItem downloadItem = new AdvancedListItem();
-            downloadItem.setLeftGraphic(wrap(SVG::downloadOutline));
-            downloadItem.setActionButtonVisible(false);
-            downloadItem.setTitle(i18n("download"));
-            downloadItem.setOnAction(e -> Controllers.navigate(Controllers.getDownloadPage()));
-
             // sixth item in left sidebar
             AdvancedListItem launcherSettingsItem = new AdvancedListItem();
             launcherSettingsItem.setLeftGraphic(wrap(SVG::gearOutline));
@@ -158,12 +144,19 @@ public class RootPage extends DecoratorAnimatedPage implements DecoratorPage {
             launcherSettingsItem.setTitle(i18n("settings"));
             launcherSettingsItem.setOnAction(e -> Controllers.navigate(Controllers.getSettingsPage()));
 
-            // discord
-            AdvancedListItem discordItem = new AdvancedListItem();
-            discordItem.setLeftGraphic(wrap(SVG::discordIcon));
-            discordItem.setActionButtonVisible(false);
-            discordItem.setTitle(i18n("moonlightland.discord"));
-            discordItem.setOnAction(e -> FXUtils.openLink("https://discord.gg/w3PxJQgcuf"));
+            // terms
+            AdvancedListItem termsItem = new AdvancedListItem();
+            termsItem.setLeftGraphic(wrap(SVG::bookOutline));
+            termsItem.setActionButtonVisible(false);
+            termsItem.setTitle(i18n("gennokioku.terms"));
+            termsItem.setOnAction(e -> FXUtils.openLink("https://wiki.gennokioku.city/terms"));
+
+            // changelog
+            AdvancedListItem changelogItem = new AdvancedListItem();
+            changelogItem.setLeftGraphic(wrap(SVG::starOutline));
+            changelogItem.setActionButtonVisible(false);
+            changelogItem.setTitle(i18n("gennokioku.changelog"));
+            changelogItem.setOnAction(e -> FXUtils.openLink("https://wiki.gennokioku.city/changelog"));
 
             // the left sidebar
             AdvancedListBox sideBar = new AdvancedListBox()
@@ -171,12 +164,11 @@ public class RootPage extends DecoratorAnimatedPage implements DecoratorPage {
                     .add(accountListItem)
                     .startCategory(i18n("version").toUpperCase(Locale.ROOT))
                     .add(gameListItem)
-                    .add(gameItem)
-                    .add(downloadItem)
                     .startCategory(i18n("settings.launcher.general").toUpperCase(Locale.ROOT))
                     .add(launcherSettingsItem)
-                    .startCategory("Moonlight Land")
-                    .add(discordItem);
+                    .startCategory("Gennokioku")
+                    .add(termsItem)
+                    .add(changelogItem);
 
             // the root page, with the sidebar in left, navigator in center.
             setLeft(sideBar);

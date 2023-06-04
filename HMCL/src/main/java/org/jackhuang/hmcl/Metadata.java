@@ -30,8 +30,8 @@ import java.nio.file.Paths;
 public final class Metadata {
     private Metadata() {}
 
-    public static final String NAME = "Moonlight Land 启动器";
-    public static final String FULL_NAME = "Moonlight Land 启动器";
+    public static final String NAME = "Gennokioku 启动器";
+    public static final String FULL_NAME = "Gennokioku 启动器";
     public static final String VERSION = "1.1.5";
 
     public static final String TITLE = NAME + " " + VERSION;
