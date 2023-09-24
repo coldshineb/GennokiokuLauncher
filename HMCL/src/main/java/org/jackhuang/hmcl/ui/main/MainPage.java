@@ -69,9 +69,12 @@ import java.util.stream.IntStream;
 
 import static org.jackhuang.hmcl.setting.ConfigHolder.config;
 import static org.jackhuang.hmcl.ui.FXUtils.SINE;
+import static org.jackhuang.hmcl.ui.FXUtils.runInFX;
 import static org.jackhuang.hmcl.util.i18n.I18n.i18n;
 
 public final class MainPage extends StackPane implements DecoratorPage {
+    private static final String ANNOUNCEMENT = "announcement";
+
     private final ReadOnlyObjectWrapper<State> state = new ReadOnlyObjectWrapper<>();
 
     private final PopupMenu menu = new PopupMenu();
@@ -113,7 +116,7 @@ public final class MainPage extends StackPane implements DecoratorPage {
 
         setPadding(new Insets(20));
 
-        if (Metadata.isNightly() || (Metadata.isDev() && !Objects.equals(Metadata.VERSION, config().getHideAnnouncementVersion()))) {
+        if (Metadata.isNightly() || (Metadata.isDev() && !Objects.equals(Metadata.VERSION, config().getShownTips().get(ANNOUNCEMENT)))) {
             announcementPane = new VBox(16);
             if (Metadata.isNightly()) {
                 announcementPane.getChildren().add(new AnnouncementCard(i18n("update.channel.nightly.title"), i18n("update.channel.nightly.hint")));
@@ -140,7 +143,7 @@ public final class MainPage extends StackPane implements DecoratorPage {
             StackPane.setMargin(hBox, new Insets(9, 12, 9, 16));
             {
                 Label lblIcon = new Label();
-                lblIcon.setGraphic(SVG.update(Theme.whiteFillBinding(), 20, 20));
+                lblIcon.setGraphic(SVG.UPDATE.createIcon(Theme.whiteFill(), 20, 20));
 
                 TwoLineListItem prompt = new TwoLineListItem();
                 prompt.setSubtitle(i18n("update.bubble.subtitle"));
@@ -152,7 +155,7 @@ public final class MainPage extends StackPane implements DecoratorPage {
             }
 
             JFXButton closeUpdateButton = new JFXButton();
-            closeUpdateButton.setGraphic(SVG.close(Theme.whiteFillBinding(), 10, 10));
+            closeUpdateButton.setGraphic(SVG.CLOSE.createIcon(Theme.whiteFill(), 10, 10));
             StackPane.setAlignment(closeUpdateButton, Pos.TOP_RIGHT);
             closeUpdateButton.getStyleClass().add("toggle-icon-tiny");
             StackPane.setMargin(closeUpdateButton, new Insets(5));
@@ -221,10 +224,11 @@ public final class MainPage extends StackPane implements DecoratorPage {
             menuButton.setOnMouseClicked(e -> onMenu());
             menuButton.setClip(new Rectangle(211, -100, 100, 200));
             StackPane graphic = new StackPane();
-            Node svg = SVG.triangle(Theme.foregroundFillBinding(), 10, 10);
+            Node svg = SVG.TRIANGLE.createIcon(Theme.foregroundFillBinding(), 10, 10);
             StackPane.setAlignment(svg, Pos.CENTER_RIGHT);
             graphic.getChildren().setAll(svg);
             graphic.setTranslateX(12);
+            runInFX(() -> FXUtils.installFastTooltip(menuButton, i18n("version.switch")));
             menuButton.setGraphic(graphic);
 
             launchPane.getChildren().setAll(launchButton, separator, menuButton);
@@ -297,7 +301,7 @@ public final class MainPage extends StackPane implements DecoratorPage {
 
     public void hideAnnouncementPane() {
         if (announcementPane != null) {
-            config().setHideAnnouncementVersion(Metadata.VERSION);
+            config().getShownTips().put(ANNOUNCEMENT, Metadata.VERSION);
             Pane parent = (Pane) announcementPane.getParent();
             if (parent != null)
                 parent.getChildren().remove(announcementPane);

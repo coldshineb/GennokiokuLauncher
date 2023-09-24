@@ -139,21 +139,21 @@ public class RootPage extends DecoratorAnimatedPage implements DecoratorPage {
 
             // sixth item in left sidebar
             AdvancedListItem launcherSettingsItem = new AdvancedListItem();
-            launcherSettingsItem.setLeftGraphic(wrap(SVG::gearOutline));
+            launcherSettingsItem.setLeftGraphic(wrap(SVG.GEAR_OUTLINE));
             launcherSettingsItem.setActionButtonVisible(false);
             launcherSettingsItem.setTitle(i18n("settings"));
             launcherSettingsItem.setOnAction(e -> Controllers.navigate(Controllers.getSettingsPage()));
 
             // terms
             AdvancedListItem termsItem = new AdvancedListItem();
-            termsItem.setLeftGraphic(wrap(SVG::bookOutline));
+            termsItem.setLeftGraphic(wrap(SVG.BOOK_OUTLINE));
             termsItem.setActionButtonVisible(false);
             termsItem.setTitle(i18n("gennokioku.terms"));
             termsItem.setOnAction(e -> FXUtils.openLink("https://wiki.gennokioku.city/terms"));
 
             // changelog
             AdvancedListItem changelogItem = new AdvancedListItem();
-            changelogItem.setLeftGraphic(wrap(SVG::starOutline));
+            changelogItem.setLeftGraphic(wrap(SVG.STAR_OUTLINE));
             changelogItem.setActionButtonVisible(false);
             changelogItem.setTitle(i18n("gennokioku.changelog"));
             changelogItem.setOnAction(e -> FXUtils.openLink("https://wiki.gennokioku.city/changelog"));

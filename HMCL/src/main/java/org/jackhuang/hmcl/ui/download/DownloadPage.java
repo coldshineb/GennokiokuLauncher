@@ -89,7 +89,7 @@ public class DownloadPage extends DecoratorAnimatedPage implements DecoratorPage
             return page;
         }));
         modTab.setNodeSupplier(loadVersionFor(() -> new ModDownloadListPage((profile, version, file) -> download(profile, version, file, "mods"), true)));
-        resourcePackTab.setNodeSupplier(loadVersionFor(() -> new DownloadListPage(CurseForgeRemoteModRepository.RESOURCE_PACKS, (profile, version, file) -> download(profile, version, file, "resourcepacks"), true)));
+        resourcePackTab.setNodeSupplier(loadVersionFor(() -> new ResourcePackDownloadListPage((profile, version, file) -> download(profile, version, file, "resourcepacks"), true)));
         customizationTab.setNodeSupplier(loadVersionFor(() -> new DownloadListPage(CurseForgeRemoteModRepository.CUSTOMIZATIONS)));
         worldTab.setNodeSupplier(loadVersionFor(() -> new DownloadListPage(CurseForgeRemoteModRepository.WORLDS)));
         tab = new TabHeader(newGameTab, modpackTab, modTab, resourcePackTab, worldTab);
@@ -105,13 +105,13 @@ public class DownloadPage extends DecoratorAnimatedPage implements DecoratorPage
             AdvancedListBox sideBar = new AdvancedListBox()
                     .addNavigationDrawerItem(item -> {
                         item.setTitle(i18n("game"));
-                        item.setLeftGraphic(wrap(SVG::gamepad));
+                        item.setLeftGraphic(wrap(SVG.GAMEPAD));
                         item.activeProperty().bind(tab.getSelectionModel().selectedItemProperty().isEqualTo(newGameTab));
                         item.setOnAction(e -> tab.select(newGameTab));
                     })
                     .addNavigationDrawerItem(item -> {
                         item.setTitle(i18n("mods"));
-                        item.setLeftGraphic(wrap(SVG::puzzle));
+                        item.setLeftGraphic(wrap(SVG.PUZZLE));
                         item.activeProperty().bind(tab.getSelectionModel().selectedItemProperty().isEqualTo(modTab));
                         item.setOnAction(e -> tab.select(modTab));
                     });

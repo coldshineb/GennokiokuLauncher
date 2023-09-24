@@ -73,7 +73,7 @@ public class GameListPage extends DecoratorAnimatedPage implements DecoratorPage
                 addProfileItem.getStyleClass().add("navigation-drawer-item");
                 addProfileItem.setTitle(i18n("profile.new"));
                 addProfileItem.setActionButtonVisible(false);
-                addProfileItem.setLeftGraphic(VersionPage.wrap(SVG::plusCircleOutline));
+                addProfileItem.setLeftGraphic(VersionPage.wrap(SVG.PLUS_CIRCLE_OUTLINE));
                 addProfileItem.setOnAction(e -> Controllers.navigate(new ProfilePage(null)));
 
                 pane.setFitToWidth(true);
@@ -89,18 +89,20 @@ public class GameListPage extends DecoratorAnimatedPage implements DecoratorPage
             AdvancedListBox bottomLeftCornerList = new AdvancedListBox()
                     .addNavigationDrawerItem(installNewGameItem -> {
                         installNewGameItem.setTitle(i18n("install.new_game"));
-                        installNewGameItem.setLeftGraphic(VersionPage.wrap(SVG::plusCircleOutline));
+                        installNewGameItem.setLeftGraphic(VersionPage.wrap(SVG.PLUS_CIRCLE_OUTLINE));
                         installNewGameItem.setOnAction(e -> Versions.addNewGame());
+                        runInFX(() -> FXUtils.installFastTooltip(installNewGameItem, i18n("install.new_game")));
                     })
                     .addNavigationDrawerItem(refreshItem -> {
                         refreshItem.setTitle(i18n("button.refresh"));
-                        refreshItem.setLeftGraphic(VersionPage.wrap(SVG::refresh));
+                        refreshItem.setLeftGraphic(VersionPage.wrap(SVG.REFRESH));
                         refreshItem.setOnAction(e -> gameList.refreshList());
                     })
                     .addNavigationDrawerItem(globalManageItem -> {
                         globalManageItem.setTitle(i18n("settings.type.global.manage"));
-                        globalManageItem.setLeftGraphic(VersionPage.wrap(SVG::gearOutline));
+                        globalManageItem.setLeftGraphic(VersionPage.wrap(SVG.GEAR_OUTLINE));
                         globalManageItem.setOnAction(e -> modifyGlobalGameSettings());
+                        runInFX(() -> FXUtils.installFastTooltip(globalManageItem, i18n("settings.type.global.manage")));
                     });
             FXUtils.setLimitHeight(bottomLeftCornerList, 40 * 4 + 12 * 2);
             setLeft(pane, bottomLeftCornerList);

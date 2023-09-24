@@ -169,8 +169,8 @@ public class WorldListPage extends ListPageBase<WorldListItem> implements Versio
             chkShowAll.selectedProperty().bindBidirectional(skinnable.showAllProperty());
 
             return Arrays.asList(chkShowAll,
-                    createToolbarButton2(i18n("button.refresh"), SVG::refresh, skinnable::refresh),
-                    createToolbarButton2(i18n("world.add"), SVG::plus, skinnable::add));
+                    createToolbarButton2(i18n("button.refresh"), SVG.REFRESH, skinnable::refresh),
+                    createToolbarButton2(i18n("world.add"), SVG.PLUS, skinnable::add));
         }
     }
 }

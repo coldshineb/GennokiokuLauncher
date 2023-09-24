@@ -103,7 +103,7 @@ public class AccountListPage extends DecoratorAnimatedPage implements DecoratorP
                     littleSkinItem.getStyleClass().add("navigation-drawer-item");
                     littleSkinItem.setActionButtonVisible(false);
                     littleSkinItem.setTitle(i18n("account.methods.gennokioku"));
-                    littleSkinItem.setLeftGraphic(wrap(SVG::server));
+                    littleSkinItem.setLeftGraphic(wrap(SVG.SERVER));
                     littleSkinItem.setOnAction(e -> Controllers.dialog(new CreateAccountPane(Accounts.FACTORY_LITTLE_SKIN)));
                     boxMethods.getChildren().add(littleSkinItem);
 
@@ -111,7 +111,7 @@ public class AccountListPage extends DecoratorAnimatedPage implements DecoratorP
                     authServerItems = MappedObservableList.create(skinnable.authServersProperty(), server -> {
                         AdvancedListItem item = new AdvancedListItem();
                         item.getStyleClass().add("navigation-drawer-item");
-                        item.setLeftGraphic(wrap(SVG::server));
+                        item.setLeftGraphic(wrap(SVG.SERVER));
                         item.setOnAction(e -> Controllers.dialog(new CreateAccountPane(server)));
 
                         JFXButton btnRemove = new JFXButton();
@@ -120,7 +120,7 @@ public class AccountListPage extends DecoratorAnimatedPage implements DecoratorP
                             e.consume();
                         });
                         btnRemove.getStyleClass().add("toggle-icon4");
-                        btnRemove.setGraphic(SVG.close(Theme.blackFillBinding(), 14, 14));
+                        btnRemove.setGraphic(SVG.CLOSE.createIcon(Theme.blackFill(), 14, 14));
                         item.setRightGraphic(btnRemove);
 
                         ObservableValue<String> title = BindingMapping.of(server, AuthlibInjectorServer::getName);
@@ -142,20 +142,9 @@ public class AccountListPage extends DecoratorAnimatedPage implements DecoratorP
                     boxMethods.getChildren().add(boxAuthServers);
                 }
 
-                AdvancedListItem addAuthServerItem = new AdvancedListItem();
-                {
-                    addAuthServerItem.getStyleClass().add("navigation-drawer-item");
-                    addAuthServerItem.setTitle(i18n("account.injector.add"));
-                    addAuthServerItem.setSubtitle(i18n("account.methods.authlib_injector"));
-                    addAuthServerItem.setActionButtonVisible(false);
-                    addAuthServerItem.setLeftGraphic(wrap(SVG::plusCircleOutline));
-                    addAuthServerItem.setOnAction(e -> Controllers.dialog(new AddAuthlibInjectorServerPane()));
-                    VBox.setMargin(addAuthServerItem, new Insets(0, 0, 12, 0));
-                }
-
                 ScrollPane scrollPane = new ScrollPane(boxMethods);
                 VBox.setVgrow(scrollPane, Priority.ALWAYS);
-                setLeft(scrollPane, addAuthServerItem);
+                setLeft(scrollPane);
             }
 
             ScrollPane scrollPane = new ScrollPane();
