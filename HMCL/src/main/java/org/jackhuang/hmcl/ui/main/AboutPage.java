@@ -19,7 +19,6 @@ package org.jackhuang.hmcl.ui.main;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import org.jackhuang.hmcl.Metadata;
@@ -35,7 +34,7 @@ public class AboutPage extends StackPane {
         ComponentList about = new ComponentList();
         {
             IconedTwoLineListItem launcher = new IconedTwoLineListItem();
-            launcher.setImage(new Image("/assets/img/gennokioku.png", 32, 32, false, true));
+            launcher.setImage(FXUtils.newBuiltinImage("/assets/img/gennokioku.png", 32, 32, false, true));
             launcher.setTitle("Gennokioku 启动器");
             launcher.setSubtitle(Metadata.VERSION);
 
@@ -45,7 +44,7 @@ public class AboutPage extends StackPane {
         ComponentList thanks = new ComponentList();
         {
             IconedTwoLineListItem coldshine = new IconedTwoLineListItem();
-            coldshine.setImage(new Image("/assets/img/coldshine.png", 64, 64, false, true));
+            coldshine.setImage(FXUtils.newBuiltinImage("/assets/img/coldshine.png", 64, 64, false, true));
             coldshine.setTitle("Yukinoshita Coldshine");
             coldshine.setSubtitle(i18n("about.thanks_to.coldshine.statement"));
             coldshine.setExternalLink("https://land.coldshine.xyz/");
@@ -57,13 +56,13 @@ public class AboutPage extends StackPane {
         {
             IconedTwoLineListItem javafx = new IconedTwoLineListItem();
             javafx.setTitle("JavaFX");
-            javafx.setSubtitle("Copyright © 2013, 2023, Oracle and/or its affiliates.\nLicensed under the GPL 2 with Classpath Exception.");
+            javafx.setSubtitle("Copyright © 2013, 2024, Oracle and/or its affiliates.\nLicensed under the GPL 2 with Classpath Exception.");
             javafx.setExternalLink("https://openjfx.io/");
 
             IconedTwoLineListItem jfoenix = new IconedTwoLineListItem();
             jfoenix.setTitle("JFoenix");
             jfoenix.setSubtitle("Copyright © 2016 JFoenix.\nLicensed under the MIT License.");
-            jfoenix.setExternalLink("http://www.jfoenix.com/");
+            jfoenix.setExternalLink("https://github.com/sshahine/JFoenix");
 
             IconedTwoLineListItem gson = new IconedTwoLineListItem();
             gson.setTitle("Gson");
@@ -73,7 +72,7 @@ public class AboutPage extends StackPane {
             IconedTwoLineListItem xz = new IconedTwoLineListItem();
             xz.setTitle("XZ for Java");
             xz.setSubtitle("Lasse Collin, Igor Pavlov, and/or Brett Okken.\nPublic Domain.");
-            xz.setExternalLink("https://tukaani.org/xz/java.html");
+            xz.setExternalLink("https://xz.tukaani.org/xz-for-java/");
 
             IconedTwoLineListItem fxgson = new IconedTwoLineListItem();
             fxgson.setTitle("fx-gson");
@@ -88,7 +87,7 @@ public class AboutPage extends StackPane {
             IconedTwoLineListItem openNBT = new IconedTwoLineListItem();
             openNBT.setTitle("OpenNBT");
             openNBT.setSubtitle("Copyright © 2013-2021 Steveice10.\nLicensed under the MIT License.");
-            openNBT.setExternalLink("https://github.com/Steveice10/OpenNBT");
+            openNBT.setExternalLink("https://github.com/GeyserMC/OpenNBT");
 
             IconedTwoLineListItem minecraftJFXSkin = new IconedTwoLineListItem();
             minecraftJFXSkin.setTitle("minecraft-jfx-skin");

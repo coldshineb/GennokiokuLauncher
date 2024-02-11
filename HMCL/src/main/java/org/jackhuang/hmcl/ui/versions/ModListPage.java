@@ -108,7 +108,7 @@ public final class ModListPage extends ListPageBase<ModListPageSkin.ModInfoObjec
             else
                 getProperties().remove(ModListPage.class);
 
-            // https://github.com/huanghongxun/HMCL/issues/938
+            // https://github.com/HMCL-dev/HMCL/issues/938
             System.gc();
         }, Platform::runLater);
     }
@@ -210,7 +210,7 @@ public final class ModListPage extends ListPageBase<ModListPageSkin.ModInfoObjec
     }
 
     public void download() {
-        Controllers.getDownloadPage().showModDownloads();
+        Controllers.getDownloadPage().showModDownloads().selectVersion(versionId);
         Controllers.navigate(Controllers.getDownloadPage());
     }
 

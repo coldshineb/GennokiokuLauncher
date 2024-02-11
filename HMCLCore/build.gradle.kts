@@ -11,6 +11,7 @@ dependencies {
     api("org.jenkins-ci:constant-pool-scanner:1.2")
     api("com.github.steveice10:opennbt:1.5")
     api("org.nanohttpd:nanohttpd:2.3.1")
-    api("org.apache.commons:commons-compress:1.23.0")
-    compileOnlyApi("org.jetbrains:annotations:24.0.1")
+    api("org.apache.commons:commons-compress:1.25.0")
+    api("io.earcam.wrapped:com.sun.tools.attach:1.8.0_jdk8u172-b11")
+    compileOnlyApi("org.jetbrains:annotations:24.1.0")
 }
