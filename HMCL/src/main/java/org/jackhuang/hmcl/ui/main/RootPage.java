@@ -161,6 +161,13 @@ public class RootPage extends DecoratorAnimatedPage implements DecoratorPage {
             launcherSettingsItem.setTitle(i18n("settings"));
             launcherSettingsItem.setOnAction(e -> Controllers.navigate(Controllers.getSettingsPage()));
 
+            // help-navigation
+            AdvancedListItem helpNavigationItem = new AdvancedListItem();
+            helpNavigationItem.setLeftGraphic(wrap(SVG.HELP_CIRCLE_OUTLINE));
+            helpNavigationItem.setActionButtonVisible(false);
+            helpNavigationItem.setTitle(i18n("gennokioku.help_navigation"));
+            helpNavigationItem.setOnAction(e -> FXUtils.openLink("https://wiki.gennokioku.city/help-navigation"));
+
             // terms
             AdvancedListItem termsItem = new AdvancedListItem();
             termsItem.setLeftGraphic(wrap(SVG.BOOK_OUTLINE));
@@ -184,6 +191,7 @@ public class RootPage extends DecoratorAnimatedPage implements DecoratorPage {
                     .startCategory(i18n("settings.launcher.general").toUpperCase(Locale.ROOT))
                     .add(launcherSettingsItem)
                     .startCategory("Gennokioku")
+                    .add(helpNavigationItem)
                     .add(termsItem)
                     .add(changelogItem);
 
