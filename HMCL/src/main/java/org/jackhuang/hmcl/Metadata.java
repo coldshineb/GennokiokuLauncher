@@ -32,7 +32,7 @@ public final class Metadata {
 
     public static final String NAME = "Moonlight Land 启动器";
     public static final String FULL_NAME = "Moonlight Land 启动器";
-    public static final String VERSION = "1.1.10";
+    public static final String VERSION = "1.1.11";
 
     public static final String TITLE = NAME + " " + VERSION;
     public static final String FULL_TITLE = FULL_NAME + " " + VERSION;

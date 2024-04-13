@@ -414,46 +414,6 @@ public class CreateAccountPane extends JFXDialogLayout implements DialogAware {
                 add(boxServers, 1, rowIndex);
 
                 rowIndex++;
-            } else if (factory instanceof AuthlibInjectorAccountFactory) {
-                Label lblServers = new Label(i18n("account.injector.server"));
-                setHalignment(lblServers, HPos.LEFT);
-                add(lblServers, 0, rowIndex);
-
-                cboServers = new JFXComboBox<>();
-                cboServers.setCellFactory(jfxListCellFactory(server -> new TwoLineListItem(server.getName(), server.getUrl())));
-                cboServers.setConverter(stringConverter(AuthlibInjectorServer::getName));
-                bindContent(cboServers.getItems(), config().getAuthlibInjectorServers());
-                cboServers.getItems().addListener(onInvalidating(
-                        () -> Platform.runLater( // the selection will not be updated as expected if we call it immediately
-                                cboServers.getSelectionModel()::selectFirst)));
-                cboServers.getSelectionModel().selectFirst();
-                cboServers.setPromptText(i18n("account.injector.empty"));
-                BooleanBinding noServers = createBooleanBinding(cboServers.getItems()::isEmpty, cboServers.getItems());
-                classPropertyFor(cboServers, "jfx-combo-box-warning").bind(noServers);
-                classPropertyFor(cboServers, "jfx-combo-box").bind(noServers.not());
-                HBox.setHgrow(cboServers, Priority.ALWAYS);
-                HBox.setMargin(cboServers, new Insets(0, 10, 0, 0));
-                cboServers.setMaxWidth(Double.MAX_VALUE);
-
-                HBox linksContainer = new HBox();
-                linksContainer.setAlignment(Pos.CENTER);
-                onChangeAndOperate(cboServers.valueProperty(), server -> {
-                    this.server = server;
-                    linksContainer.getChildren().setAll(createHyperlinks(server));
-                });
-                linksContainer.setMinWidth(USE_PREF_SIZE);
-
-                JFXButton btnAddServer = new JFXButton();
-                btnAddServer.setGraphic(SVG.PLUS.createIcon(Theme.blackFill(), 20, 20));
-                btnAddServer.getStyleClass().add("toggle-icon4");
-                btnAddServer.setOnAction(e -> {
-                    Controllers.dialog(new AddAuthlibInjectorServerPane());
-                });
-
-                HBox boxServers = new HBox(cboServers, linksContainer, btnAddServer);
-                add(boxServers, 1, rowIndex);
-
-                rowIndex++;
             }
 
             if (factory.getLoginType().requiresUsername) {

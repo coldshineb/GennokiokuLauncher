@@ -111,7 +111,7 @@ public class AccountListPage extends DecoratorAnimatedPage implements DecoratorP
                     littleSkinItem.setActionButtonVisible(false);
                     littleSkinItem.setTitle(i18n("account.methods.moonlightland"));
                     littleSkinItem.setLeftGraphic(wrap(SVG.SERVER));
-                    littleSkinItem.setOnAction(e -> Controllers.dialog(new CreateAccountPane(Accounts.FACTORY_LITTLE_SKIN)));
+                    littleSkinItem.setOnAction(e -> Controllers.dialog(new CreateAccountPane(Accounts.FACTORY_AUTHLIB_INJECTOR)));
                     boxMethods.getChildren().add(littleSkinItem);
 
                     VBox boxAuthServers = new VBox();
