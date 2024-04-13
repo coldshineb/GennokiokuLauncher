@@ -44,7 +44,6 @@ import org.jackhuang.hmcl.auth.authlibinjector.BoundAuthlibInjectorAccountFactor
 import org.jackhuang.hmcl.auth.microsoft.MicrosoftAccountFactory;
 import org.jackhuang.hmcl.auth.offline.OfflineAccountFactory;
 import org.jackhuang.hmcl.auth.yggdrasil.GameProfile;
-import org.jackhuang.hmcl.auth.yggdrasil.YggdrasilAccountFactory;
 import org.jackhuang.hmcl.auth.yggdrasil.YggdrasilService;
 import org.jackhuang.hmcl.game.OAuthServer;
 import org.jackhuang.hmcl.game.TexturesLoader;
@@ -312,7 +311,7 @@ public class CreateAccountPane extends JFXDialogLayout implements DialogAware {
                 birthLink.setExternalLink("https://support.microsoft.com/account-billing/837badbc-999e-54d2-2617-d19206b9540a");
                 JFXHyperlink profileLink = new JFXHyperlink(i18n("account.methods.microsoft.profile"));
                 profileLink.setExternalLink("https://account.live.com/editprof.aspx");
-                JFXHyperlink purchaseLink = new JFXHyperlink(i18n("account.methods.yggdrasil.purchase"));
+                JFXHyperlink purchaseLink = new JFXHyperlink(i18n("account.methods.microsoft.purchase"));
                 purchaseLink.setExternalLink(YggdrasilService.PURCHASE_URL);
                 JFXHyperlink deauthorizeLink = new JFXHyperlink(i18n("account.methods.microsoft.deauthorize"));
                 deauthorizeLink.setExternalLink("https://account.live.com/consent/Edit?client_id=000000004C794E0A");
@@ -338,24 +337,6 @@ public class CreateAccountPane extends JFXDialogLayout implements DialogAware {
             }
 
             detailsPane = vbox;
-        } else if (factory == Accounts.FACTORY_MOJANG) {
-            VBox vbox = new VBox(8);
-            HintPane hintPane = new HintPane(MessageDialogPane.MessageType.WARNING);
-            hintPane.setText(i18n("account.methods.yggdrasil.migration.hint"));
-
-            HBox linkPane = new HBox(8);
-
-            JFXHyperlink migrationLink = new JFXHyperlink(i18n("account.methods.yggdrasil.migration"));
-            migrationLink.setOnAction(e -> FXUtils.openLink(YggdrasilService.PROFILE_URL));
-
-            JFXHyperlink migrationHowLink = new JFXHyperlink(i18n("account.methods.yggdrasil.migration.how"));
-            migrationHowLink.setOnAction(e -> FXUtils.openLink(YggdrasilService.MIGRATION_FAQ_URL));
-
-            linkPane.getChildren().setAll(migrationLink, migrationHowLink);
-
-            vbox.getChildren().setAll(hintPane, linkPane);
-            detailsPane = vbox;
-            btnAccept.setDisable(true);
         } else {
             detailsPane = new AccountDetailsInputPane(factory, btnAccept::fire);
             btnAccept.disableProperty().bind(((AccountDetailsInputPane) detailsPane).validProperty().not());
@@ -433,46 +414,6 @@ public class CreateAccountPane extends JFXDialogLayout implements DialogAware {
                 add(boxServers, 1, rowIndex);
 
                 rowIndex++;
-            } else if (factory instanceof AuthlibInjectorAccountFactory) {
-                Label lblServers = new Label(i18n("account.injector.server"));
-                setHalignment(lblServers, HPos.LEFT);
-                add(lblServers, 0, rowIndex);
-
-                cboServers = new JFXComboBox<>();
-                cboServers.setCellFactory(jfxListCellFactory(server -> new TwoLineListItem(server.getName(), server.getUrl())));
-                cboServers.setConverter(stringConverter(AuthlibInjectorServer::getName));
-                bindContent(cboServers.getItems(), config().getAuthlibInjectorServers());
-                cboServers.getItems().addListener(onInvalidating(
-                        () -> Platform.runLater( // the selection will not be updated as expected if we call it immediately
-                                cboServers.getSelectionModel()::selectFirst)));
-                cboServers.getSelectionModel().selectFirst();
-                cboServers.setPromptText(i18n("account.injector.empty"));
-                BooleanBinding noServers = createBooleanBinding(cboServers.getItems()::isEmpty, cboServers.getItems());
-                classPropertyFor(cboServers, "jfx-combo-box-warning").bind(noServers);
-                classPropertyFor(cboServers, "jfx-combo-box").bind(noServers.not());
-                HBox.setHgrow(cboServers, Priority.ALWAYS);
-                HBox.setMargin(cboServers, new Insets(0, 10, 0, 0));
-                cboServers.setMaxWidth(Double.MAX_VALUE);
-
-                HBox linksContainer = new HBox();
-                linksContainer.setAlignment(Pos.CENTER);
-                onChangeAndOperate(cboServers.valueProperty(), server -> {
-                    this.server = server;
-                    linksContainer.getChildren().setAll(createHyperlinks(server));
-                });
-                linksContainer.setMinWidth(USE_PREF_SIZE);
-
-                JFXButton btnAddServer = new JFXButton();
-                btnAddServer.setGraphic(SVG.PLUS.createIcon(Theme.blackFill(), 20, 20));
-                btnAddServer.getStyleClass().add("toggle-icon4");
-                btnAddServer.setOnAction(e -> {
-                    Controllers.dialog(new AddAuthlibInjectorServerPane());
-                });
-
-                HBox boxServers = new HBox(cboServers, linksContainer, btnAddServer);
-                add(boxServers, 1, rowIndex);
-
-                rowIndex++;
             }
 
             if (factory.getLoginType().requiresUsername) {
@@ -507,25 +448,6 @@ public class CreateAccountPane extends JFXDialogLayout implements DialogAware {
                 setValidateWhileTextChanged(txtPassword, true);
                 txtPassword.setOnAction(e -> onAction.run());
                 add(txtPassword, 1, rowIndex);
-
-                rowIndex++;
-            }
-
-            if (factory instanceof YggdrasilAccountFactory) {
-                HBox box = new HBox();
-                GridPane.setColumnSpan(box, 2);
-
-                JFXHyperlink migrationLink = new JFXHyperlink(i18n("account.methods.yggdrasil.migration"));
-                migrationLink.setExternalLink("https://aka.ms/MinecraftMigration");
-
-                JFXHyperlink migrationHowLink = new JFXHyperlink(i18n("account.methods.yggdrasil.migration.how"));
-                migrationHowLink.setExternalLink("https://help.minecraft.net/hc/articles/4411173197709");
-
-                JFXHyperlink purchaseLink = new JFXHyperlink(i18n("account.methods.yggdrasil.purchase"));
-                purchaseLink.setExternalLink(YggdrasilService.PURCHASE_URL);
-
-                box.getChildren().setAll(migrationLink, migrationHowLink, purchaseLink);
-                add(box, 0, rowIndex);
 
                 rowIndex++;
             }
@@ -599,9 +521,7 @@ public class CreateAccountPane extends JFXDialogLayout implements DialogAware {
         }
 
         private boolean requiresEmailAsUsername() {
-            if (factory instanceof YggdrasilAccountFactory) {
-                return true;
-            } else if ((factory instanceof AuthlibInjectorAccountFactory) && this.server != null) {
+            if ((factory instanceof AuthlibInjectorAccountFactory) && this.server != null) {
                 return !server.isNonEmailLogin();
             }
             return false;

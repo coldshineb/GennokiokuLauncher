@@ -32,9 +32,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import org.jackhuang.hmcl.download.LibraryAnalyzer;
+import org.jackhuang.hmcl.game.HMCLGameRepository;
 import org.jackhuang.hmcl.game.Version;
 import org.jackhuang.hmcl.mod.ModLoaderType;
-import org.jackhuang.hmcl.mod.ModManager;
 import org.jackhuang.hmcl.mod.RemoteMod;
 import org.jackhuang.hmcl.mod.RemoteModRepository;
 import org.jackhuang.hmcl.setting.Profile;
@@ -240,7 +240,7 @@ public class DownloadPage extends Control implements DecoratorPage {
                 TwoLineListItem content = new TwoLineListItem();
                 HBox.setHgrow(content, Priority.ALWAYS);
                 ModTranslations.Mod mod = getSkinnable().translations.getModByCurseForgeId(getSkinnable().addon.getSlug());
-                content.setTitle(mod != null && I18n.getCurrentLocale().getLocale() == Locale.CHINA ? mod.getDisplayName() : getSkinnable().addon.getTitle());
+                content.setTitle(mod != null && I18n.isUseChinese() ? mod.getDisplayName() : getSkinnable().addon.getTitle());
                 content.setSubtitle(getSkinnable().addon.getDescription());
                 content.getTags().setAll(getSkinnable().addon.getCategories().stream()
                         .map(category -> getSkinnable().page.getLocalizedCategory(category))
@@ -253,14 +253,6 @@ public class DownloadPage extends Control implements DecoratorPage {
                     descriptionPane.getChildren().add(openMcmodButton);
                     openMcmodButton.setMinWidth(Region.USE_PREF_SIZE);
                     runInFX(() -> FXUtils.installFastTooltip(openMcmodButton, i18n("mods.mcmod")));
-
-                    if (StringUtils.isNotBlank(getSkinnable().mod.getMcbbs())) {
-                        JFXHyperlink openMcbbsButton = new JFXHyperlink(i18n("mods.mcbbs"));
-                        openMcbbsButton.setExternalLink(ModManager.getMcbbsUrl(getSkinnable().mod.getMcbbs()));
-                        descriptionPane.getChildren().add(openMcbbsButton);
-                        openMcbbsButton.setMinWidth(Region.USE_PREF_SIZE);
-                        runInFX(() -> FXUtils.installFastTooltip(openMcbbsButton, i18n("mods.mcbbs")));
-                    }
                 }
 
                 JFXHyperlink openUrlButton = new JFXHyperlink(control.page.getLocalizedOfficialPage());
@@ -292,8 +284,9 @@ public class DownloadPage extends Control implements DecoratorPage {
                     if (control.versions == null) return;
 
                     if (control.version.getProfile() != null && control.version.getVersion() != null) {
-                        Version game = control.version.getProfile().getRepository().getResolvedPreservingPatchesVersion(control.version.getVersion());
-                        LibraryAnalyzer libraryAnalyzer = LibraryAnalyzer.analyze(game);
+                        HMCLGameRepository repository = control.version.getProfile().getRepository();
+                        Version game = repository.getResolvedPreservingPatchesVersion(control.version.getVersion());
+                        LibraryAnalyzer libraryAnalyzer = LibraryAnalyzer.analyze(game, repository.getGameVersion(game).orElse(null));
                         libraryAnalyzer.getVersion(LibraryAnalyzer.LibraryType.MINECRAFT).ifPresent(currentGameVersion -> {
                             Set<ModLoaderType> currentGameModLoaders = libraryAnalyzer.getModLoaders();
                             if (control.versions.containsKey(currentGameVersion)) {
@@ -351,15 +344,21 @@ public class DownloadPage extends Control implements DecoratorPage {
             container.setOnMouseClicked(e -> Controllers.navigate(new DownloadPage(page, addon, version, callback)));
             getChildren().setAll(container);
 
-            ModTranslations.Mod mod = ModTranslations.getTranslationsByRepositoryType(page.repository.getType()).getModByCurseForgeId(addon.getSlug());
-            content.setTitle(mod != null && I18n.getCurrentLocale().getLocale() == Locale.CHINA ? mod.getDisplayName() : addon.getTitle());
-            content.setSubtitle(addon.getDescription());
-            content.getTags().setAll(addon.getCategories().stream()
-                    .map(page::getLocalizedCategory)
-                    .collect(Collectors.toList()));
+            if (addon != RemoteMod.BROKEN) {
+                ModTranslations.Mod mod = ModTranslations.getTranslationsByRepositoryType(page.repository.getType()).getModByCurseForgeId(addon.getSlug());
+                content.setTitle(mod != null && I18n.isUseChinese() ? mod.getDisplayName() : addon.getTitle());
+                content.setSubtitle(addon.getDescription());
+                content.getTags().setAll(addon.getCategories().stream()
+                        .map(page::getLocalizedCategory)
+                        .collect(Collectors.toList()));
 
-            if (StringUtils.isNotBlank(addon.getIconUrl())) {
-                imageView.setImage(FXUtils.newRemoteImage(addon.getIconUrl(), 40, 40, true, true, true));
+                if (StringUtils.isNotBlank(addon.getIconUrl())) {
+                    imageView.setImage(FXUtils.newRemoteImage(addon.getIconUrl(), 40, 40, true, true, true));
+                }
+            } else {
+                content.setTitle(i18n("mods.broken_dependency.title"));
+                content.setSubtitle(i18n("mods.broken_dependency.desc"));
+                imageView.setImage(FXUtils.newBuiltinImage("/assets/img/icon@8x.png", 40, 40, true, true));
             }
         }
     }
