@@ -413,7 +413,7 @@ public class DownloadListPage extends Control implements DecoratorPage, VersionP
                         searchAction.handle(event);
                     });
                     lastPageButton.setDisable(true);
-                    control.pageCount.addListener((observable, oldValue, newValue) -> lastPageButton.setDisable(control.pageCount.get() == -1));
+                    control.pageCount.addListener((observable, oldValue, newValue) -> lastPageButton.setDisable(control.pageCount.get() == -1 || control.pageOffset.get() >= control.pageCount.get() - 1));
 
                     Pane placeholder = new Pane();
                     HBox.setHgrow(placeholder, Priority.SOMETIMES);
@@ -477,7 +477,7 @@ public class DownloadListPage extends Control implements DecoratorPage, VersionP
                     protected void updateControl(RemoteMod dataItem, boolean empty) {
                         if (empty) return;
                         ModTranslations.Mod mod = ModTranslations.getTranslationsByRepositoryType(getSkinnable().repository.getType()).getModByCurseForgeId(dataItem.getSlug());
-                        content.setTitle(mod != null && I18n.getCurrentLocale().getLocale() == Locale.CHINA ? mod.getDisplayName() : dataItem.getTitle());
+                        content.setTitle(mod != null && I18n.isUseChinese() ? mod.getDisplayName() : dataItem.getTitle());
                         content.setSubtitle(dataItem.getDescription());
                         content.getTags().setAll(dataItem.getCategories().stream()
                                 .map(category -> getSkinnable().getLocalizedCategory(category))
