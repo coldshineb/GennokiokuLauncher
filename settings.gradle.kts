@@ -1,4 +1,4 @@
-rootProject.name = "HMCL3"
+rootProject.name = "GennokiokuLauncher"
 include(
     "HMCL",
     "HMCLCore",
