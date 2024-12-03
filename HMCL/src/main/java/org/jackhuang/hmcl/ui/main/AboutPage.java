@@ -52,7 +52,7 @@ public final class AboutPage extends StackPane {
             thanks.getContent().setAll(coldshine);
         }
 
-        ComponentList dep = new ComponentList();
+        ComponentList deps = new ComponentList();
         {
             IconedTwoLineListItem javafx = new IconedTwoLineListItem();
             javafx.setTitle("JavaFX");
@@ -94,7 +94,7 @@ public final class AboutPage extends StackPane {
             minecraftJFXSkin.setSubtitle("Copyright © 2016 InfinityStudio.\nLicensed under the GPL 3.");
             minecraftJFXSkin.setExternalLink("https://github.com/InfinityStudio/minecraft-jfx-skin");
 
-            dep.getContent().setAll(javafx, jfoenix, gson, xz, fxgson, constantPoolScanner, openNBT, minecraftJFXSkin);
+            deps.getContent().setAll(javafx, jfoenix, gson, xz, fxgson, constantPoolScanner, openNBT, minecraftJFXSkin);
         }
 
         ComponentList legal = new ComponentList();
