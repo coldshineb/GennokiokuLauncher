@@ -28,7 +28,7 @@ import org.jackhuang.hmcl.ui.construct.IconedTwoLineListItem;
 
 import static org.jackhuang.hmcl.util.i18n.I18n.i18n;
 
-public class AboutPage extends StackPane {
+public final class AboutPage extends StackPane {
 
     public AboutPage() {
         ComponentList about = new ComponentList();
@@ -52,7 +52,7 @@ public class AboutPage extends StackPane {
             thanks.getContent().setAll(coldshine);
         }
 
-        ComponentList dep = new ComponentList();
+        ComponentList deps = new ComponentList();
         {
             IconedTwoLineListItem javafx = new IconedTwoLineListItem();
             javafx.setTitle("JavaFX");
@@ -94,7 +94,7 @@ public class AboutPage extends StackPane {
             minecraftJFXSkin.setSubtitle("Copyright © 2016 InfinityStudio.\nLicensed under the GPL 3.");
             minecraftJFXSkin.setExternalLink("https://github.com/InfinityStudio/minecraft-jfx-skin");
 
-            dep.getContent().setAll(javafx, jfoenix, gson, xz, fxgson, constantPoolScanner, openNBT, minecraftJFXSkin);
+            deps.getContent().setAll(javafx, jfoenix, gson, xz, fxgson, constantPoolScanner, openNBT, minecraftJFXSkin);
         }
 
         ComponentList legal = new ComponentList();
@@ -117,7 +117,7 @@ public class AboutPage extends StackPane {
                 thanks,
 
                 ComponentList.createComponentListTitle(i18n("about.dependency")),
-                dep,
+                deps,
 
                 ComponentList.createComponentListTitle(i18n("about.legal")),
                 legal
