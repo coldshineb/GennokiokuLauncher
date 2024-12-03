@@ -28,7 +28,7 @@ import org.jackhuang.hmcl.ui.construct.IconedTwoLineListItem;
 
 import static org.jackhuang.hmcl.util.i18n.I18n.i18n;
 
-public class AboutPage extends StackPane {
+public final class AboutPage extends StackPane {
 
     public AboutPage() {
         ComponentList about = new ComponentList();
@@ -117,7 +117,7 @@ public class AboutPage extends StackPane {
                 thanks,
 
                 ComponentList.createComponentListTitle(i18n("about.dependency")),
-                dep,
+                deps,
 
                 ComponentList.createComponentListTitle(i18n("about.legal")),
                 legal
